@@ -2,13 +2,13 @@ package cart.application.dto.response;
 
 public class PointResponse {
 
-    private final Integer point;
+    private final Integer points;
 
     public PointResponse(final Integer point) {
-        this.point = point;
+        this.points = point;
     }
 
-    public Integer getPoint() {
-        return point;
+    public Integer getPoints() {
+        return points;
     }
 }

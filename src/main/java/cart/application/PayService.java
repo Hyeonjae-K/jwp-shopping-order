@@ -28,9 +28,9 @@ public class PayService {
                 .map(PayItemRequest::getCartItemId)
                 .collect(Collectors.toList());
         final List<CartItem> cartItems = getCartItems(member, cartIds);
-        member.usePoint(request.getPoint());
+        member.usePoint(request.getPoints());
         final OrderProducts orderProducts = new OrderProducts(cartItems);
-        final Order order = new Order(member, request.getPoint(), orderProducts);
+        final Order order = new Order(member, request.getPoints(), orderProducts);
         payRepository.deleteCartItemsByIds(cartIds);
         return payRepository.createOrder(order);
     }

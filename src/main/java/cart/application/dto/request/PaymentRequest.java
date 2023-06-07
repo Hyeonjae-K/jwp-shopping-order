@@ -10,18 +10,18 @@ public class PaymentRequest {
     private final List<PayItemRequest> cartItemIds;
 
     @PositiveOrZero(message = "포인트는 0원 이상 사용 가능합니다.")
-    private final Integer point;
+    private final Integer points;
 
     public PaymentRequest(final List<PayItemRequest> cartItemIds, final Integer point) {
         this.cartItemIds = cartItemIds;
-        this.point = point;
+        this.points = point;
     }
 
     public List<PayItemRequest> getCartItemIds() {
         return cartItemIds;
     }
 
-    public Integer getPoint() {
-        return point;
+    public Integer getPoints() {
+        return points;
     }
 }
