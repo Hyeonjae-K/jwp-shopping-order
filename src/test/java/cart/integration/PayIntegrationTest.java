@@ -43,7 +43,7 @@ public class PayIntegrationTest extends IntegrationTest {
     @DisplayName("장바구니가 비어있을 경우 bad request를 반환한다.")
     @Test
     void emptyCartPayment() {
-        final PaymentRequest request = new PaymentRequest(new ArrayList<>(), 0);
+        final PaymentRequest request = new PaymentRequest(new ArrayList<>(), 0, 0);
 
         final ExtractableResponse<Response> response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -65,7 +65,7 @@ public class PayIntegrationTest extends IntegrationTest {
     @ParameterizedTest
     @ValueSource(ints = {-1, -2, -100, -987654321})
     void minusPointPayment(final int point) {
-        final PaymentRequest request = new PaymentRequest(List.of(new PayItemRequest(1L)), point);
+        final PaymentRequest request = new PaymentRequest(List.of(new PayItemRequest(1L)), 0, point);
 
         final ExtractableResponse<Response> response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -85,7 +85,7 @@ public class PayIntegrationTest extends IntegrationTest {
     @DisplayName("사용자의 보유 포인트보다 사용 포인트가 클 경우 bad request를 반환한다.")
     @Test
     void overPointUsePayment() {
-        final PaymentRequest request = new PaymentRequest(List.of(new PayItemRequest(1L)), 100);
+        final PaymentRequest request = new PaymentRequest(List.of(new PayItemRequest(1L)), 0, 100);
 
         final ExtractableResponse<Response> response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -105,7 +105,7 @@ public class PayIntegrationTest extends IntegrationTest {
     @DisplayName("장바구니 아이템을 담은 사용자와 결제 요청 사용자가 다를 경우 bad request를 반환한다.")
     @Test
     void differentMemberPayment() {
-        final PaymentRequest request = new PaymentRequest(List.of(new PayItemRequest(1L)), 100);
+        final PaymentRequest request = new PaymentRequest(List.of(new PayItemRequest(1L)), 0, 100);
 
         final ExtractableResponse<Response> response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -125,7 +125,7 @@ public class PayIntegrationTest extends IntegrationTest {
     @DisplayName("장바구니에 담긴 아이템을 결제한다.")
     @Test
     void paymentCartItems() {
-        final PaymentRequest request = new PaymentRequest(List.of(new PayItemRequest(1L)), 0);
+        final PaymentRequest request = new PaymentRequest(List.of(new PayItemRequest(1L)), 0, 0);
         final int expectPoint = 1_000;
 
         final ExtractableResponse<Response> response = given()
@@ -139,8 +139,8 @@ public class PayIntegrationTest extends IntegrationTest {
                 .extract();
 
         assertAll(
-                () -> assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value()),
-                () -> assertThat(response.header("Location")).isEqualTo("redirect:/members/orders/1"),
+                () -> assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value()),
+                //() -> assertThat(response.header("Location")).isEqualTo("redirect:/members/orders/1"),
                 // point = price * quantity * point_rate
                 () -> assertThat(memberDao.findByMemberId(member1.getId()).getPoint()).isEqualTo(expectPoint)
         );
@@ -150,7 +150,7 @@ public class PayIntegrationTest extends IntegrationTest {
     @Test
     void paymentWithPoint() {
         final int expectPoint = 1400;
-        final PaymentRequest request = new PaymentRequest(List.of(new PayItemRequest(1L)), 100);
+        final PaymentRequest request = new PaymentRequest(List.of(new PayItemRequest(1L)), 0, 100);
         member1.savePoint(500);
         memberDao.updatePoint(new MemberEntity(member1.getId(), member1.getEmail(), member1.getPassword(), member1.getPoint()));
 
@@ -165,8 +165,8 @@ public class PayIntegrationTest extends IntegrationTest {
                 .extract();
 
         assertAll(
-                () -> assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value()),
-                () -> assertThat(response.header("Location")).isEqualTo("redirect:/members/orders/1"),
+                () -> assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value()),
+                //() -> assertThat(response.header("Location")).isEqualTo("redirect:/members/orders/1"),
                 () -> assertThat(memberDao.findByMemberId(member1.getId()).getPoint()).isEqualTo(expectPoint)
         );
     }

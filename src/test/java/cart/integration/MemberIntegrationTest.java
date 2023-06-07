@@ -36,7 +36,7 @@ public class MemberIntegrationTest extends IntegrationTest {
 
         assertAll(
                 () -> assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value()),
-                () -> assertThat(response.path("point").equals(0)).isTrue()
+                () -> assertThat(response.path("points").equals(0)).isTrue()
         );
     }
 }
