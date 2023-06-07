@@ -29,6 +29,10 @@ public class PayService {
                 .collect(Collectors.toList());
         final List<CartItem> cartItems = getCartItems(member, cartIds);
         member.usePoint(request.getPoints());
+        if (cartItems.isEmpty()) {
+            throw new IllegalArgumentException("장바구니를 찾을 수 없습니다.");
+        }
+        cartItems.forEach(cartItem -> cartItem.checkOwner(member));
         final OrderProducts orderProducts = new OrderProducts(cartItems);
         final Order order = new Order(member, request.getPoints(), orderProducts);
         payRepository.deleteCartItemsByIds(cartIds);
