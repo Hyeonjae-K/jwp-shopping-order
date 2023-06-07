@@ -94,7 +94,7 @@ class Mapper {
         return new OrderResponse(
                 orderHistoryEntity.getId(),
                 orderHistoryEntity.getTotalAmount(),
-                orderHistoryEntity.getTotalAmount(),
+                orderProductEntities.get(DEFAULT_PRODUCT_ENTITY_INDEX).getQuantity(),
                 orderProductEntities.get(DEFAULT_PRODUCT_ENTITY_INDEX).getName()
         );
     }
