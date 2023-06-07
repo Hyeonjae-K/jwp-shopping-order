@@ -3,13 +3,13 @@ package cart.application.dto.response;
 public class OrderItemResponse {
     private final String name;
     private final String imageUrl;
-    private final Integer count;
+    private final Integer quantity;
     private final Integer price;
 
     public OrderItemResponse(final String name, final String imageUrl, final Integer count, final Integer price) {
         this.name = name;
         this.imageUrl = imageUrl;
-        this.count = count;
+        this.quantity = count;
         this.price = price;
     }
 
@@ -21,8 +21,8 @@ public class OrderItemResponse {
         return imageUrl;
     }
 
-    public Integer getCount() {
-        return count;
+    public Integer getQuantity() {
+        return quantity;
     }
 
     public Integer getPrice() {
