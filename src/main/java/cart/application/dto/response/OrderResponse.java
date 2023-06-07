@@ -3,13 +3,13 @@ package cart.application.dto.response;
 public class OrderResponse {
 
     private final Long orderId;
-    private final Integer totalPrice;
+    private final Integer orderPrice;
     private final Integer totalAmount;
     private final String previewName;
 
     public OrderResponse(final Long orderId, final Integer totalPrice, final Integer totalAmount, final String previewName) {
         this.orderId = orderId;
-        this.totalPrice = totalPrice;
+        this.orderPrice = totalPrice;
         this.totalAmount = totalAmount;
         this.previewName = previewName;
     }
@@ -18,8 +18,8 @@ public class OrderResponse {
         return orderId;
     }
 
-    public Integer getTotalPrice() {
-        return totalPrice;
+    public Integer getOrderPrice() {
+        return orderPrice;
     }
 
     public Integer getTotalAmount() {
