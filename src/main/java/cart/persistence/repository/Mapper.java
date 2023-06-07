@@ -94,7 +94,9 @@ class Mapper {
         return new OrderResponse(
                 orderHistoryEntity.getId(),
                 orderHistoryEntity.getTotalAmount(),
-                orderProductEntities.size(),
+                orderProductEntities.stream()
+                        .mapToInt(OrderProductEntity::getQuantity)
+                        .sum(),
                 orderProductEntities.get(DEFAULT_PRODUCT_ENTITY_INDEX).getName()
         );
     }
