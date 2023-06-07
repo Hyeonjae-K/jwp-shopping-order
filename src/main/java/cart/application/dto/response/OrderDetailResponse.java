@@ -4,13 +4,13 @@ import java.util.List;
 
 public class OrderDetailResponse {
     private final List<OrderItemResponse> orderItems;
-    private final Integer totalPrice;
+    private final Integer originalPrice;
     private final Integer usedPoints;
     private final Integer orderPrice;
 
     public OrderDetailResponse(final List<OrderItemResponse> orderItems, final Integer totalPrice, final Integer usedPoints, final Integer orderPrice) {
         this.orderItems = orderItems;
-        this.totalPrice = totalPrice;
+        this.originalPrice = totalPrice;
         this.usedPoints = usedPoints;
         this.orderPrice = orderPrice;
     }
@@ -19,8 +19,8 @@ public class OrderDetailResponse {
         return orderItems;
     }
 
-    public Integer getTotalPrice() {
-        return totalPrice;
+    public Integer getOriginalPrice() {
+        return originalPrice;
     }
 
     public Integer getUsedPoints() {
